@@ -1,0 +1,172 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+
+  /* Custom subtle scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(168, 85, 247, 0.25);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(168, 85, 247, 0.5);
+  }
+}
+
+/* Luminous Glass Panel (Adaptive Light / Dark) */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  box-shadow: 0 12px 36px -8px rgba(99, 102, 241, 0.08);
+}
+
+.dark .glass-panel {
+  background: rgba(15, 23, 42, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 14px 40px -10px rgba(0, 0, 0, 0.6);
+}
+
+.glass-panel-hover {
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.glass-panel-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 34px -10px rgba(168, 85, 247, 0.2);
+}
+
+.gradient-border {
+  position: relative;
+  background: linear-gradient(60deg, #a855f7, #6366f1, #06b6d4);
+  padding: 1px;
+  border-radius: 1rem;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #7E22CE 0%, #9333EA 50%, #4F46E5 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.dark .gradient-text {
+  background: linear-gradient(135deg, #FAF5FF 0%, #D8B4FE 50%, #A855F7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Dynamic Swipe Animation Keyframes */
+@keyframes swipePop {
+  0% {
+    opacity: 0;
+    transform: scale(0.6) translateY(24px);
+  }
+  35% {
+    opacity: 1;
+    transform: scale(1.15) translateY(-6px);
+  }
+  65% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.92) translateY(-20px);
+  }
+}
+
+@keyframes particleBurst {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--tx), var(--ty)) scale(0.25) rotate(var(--rot));
+  }
+}
+
+.animate-swipe-pop {
+  animation: swipePop 0.65s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.animate-particle {
+  animation: particleBurst 0.65s ease-out forwards;
+}
+
+/* Next card rising from the deck into the top position */
+@keyframes cardRise {
+  0% {
+    opacity: 0.6;
+    transform: scale(0.95) translateY(12px);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.012) translateY(-2px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* One-time nudge showing that the card can be swiped both ways */
+@keyframes swipeHint {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  20% { transform: translateX(-26px) rotate(-3deg); }
+  45% { transform: translateX(26px) rotate(3deg); }
+  65% { transform: translateX(-8px) rotate(-1deg); }
+  80% { transform: translateX(4px) rotate(0.5deg); }
+}
+
+/* Action button "punch" when it fires a swipe */
+@keyframes buttonPunch {
+  0% { transform: scale(1); }
+  35% { transform: scale(0.82); }
+  70% { transform: scale(1.18); }
+  100% { transform: scale(1); }
+}
+
+/* Expanding ring behind an action button */
+@keyframes ringPulse {
+  0% { opacity: 0.7; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.9); }
+}
+
+.animate-card-rise {
+  animation: cardRise 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-swipe-hint {
+  animation: swipeHint 1.3s cubic-bezier(0.45, 0, 0.55, 1) 0.7s both;
+}
+
+.animate-button-punch {
+  animation: buttonPunch 0.38s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.animate-ring-pulse {
+  animation: ringPulse 0.55s ease-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-card-rise,
+  .animate-swipe-hint,
+  .animate-button-punch,
+  .animate-ring-pulse,
+  .animate-swipe-pop,
+  .animate-particle {
+    animation: none !important;
+  }
+}
